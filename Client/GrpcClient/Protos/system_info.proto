@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+option csharp_namespace = "SystemInfoAPI.gRPC";
+
+package systeminfo;
+
+// The SystemInfo service definition
+service SystemInfoService {
+  // Get system information (unary RPC)
+  rpc GetSystemInfo (SystemInfoRequest) returns (SystemInfoResponse);
+  
+  // Stream system information updates (server streaming RPC)
+  rpc StreamSystemInfo (SystemInfoRequest) returns (stream SystemInfoResponse);
+}
+
+// Request message - can include parameters like update frequency
+message SystemInfoRequest {
+  // Optional update interval in milliseconds (for streaming)
+  int32 update_interval_ms = 1;
+}
+
+// Response message containing system information
+message SystemInfoResponse {
+  // OS information
+  string os_name = 1;
+  string os_version = 2;
+  
+  // CPU information
+  double cpu_usage_percent = 3;
+
+  
+  // Memory information
+  MemoryInfo memory_info = 5;
+  
+
+  
+  // System uptime in seconds
+  int64 uptime_seconds = 7;
+  
+  // Timestamp when information was collected
+  int64 timestamp = 8;
+}
+
+// Memory information details
+message MemoryInfo {
+   int64 total_bytes = 1;
+  int64 used_bytes = 2;
+  int64 free_bytes = 3;
+  double usage_percent = 4;
+}
+
+// Disk information details
+message DiskInfo {
+  string name = 1;
+  string format = 2;
+  string mount_point = 3;
+  int64 total_bytes = 4;
+  int64 free_bytes = 5;
+  double usage_percent = 6;
+}
