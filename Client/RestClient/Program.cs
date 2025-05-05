@@ -25,7 +25,7 @@ namespace SystemInfoAPI.Client.RestClient
                     .SetMinimumLevel(LogLevel.Information))
                 .AddHttpClient("SystemInfoAPI", client =>
                 {
-                    client.BaseAddress = new Uri("https://localhost:5001/");
+                    client.BaseAddress = new Uri("http://localhost:5058/");
                     client.DefaultRequestHeaders.Accept.Add(
                         new MediaTypeWithQualityHeaderValue("application/json"));
                 })

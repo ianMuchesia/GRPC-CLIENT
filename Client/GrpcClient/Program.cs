@@ -29,7 +29,7 @@ namespace SystemInfoAPI.Client
             var logger = loggerFactory.CreateLogger<Program>();
 
             // Setup gRPC channel with TLS
-            var channel = GrpcChannel.ForAddress("https://localhost:5001", new GrpcChannelOptions
+            var channel = GrpcChannel.ForAddress("http://localhost:5001", new GrpcChannelOptions
             {
                 LoggerFactory = loggerFactory
             });
@@ -183,7 +183,7 @@ namespace SystemInfoAPI.Client
             logger.LogInformation("System Information (gRPC):");
             logger.LogInformation($"- OS: {reply.OsName} {reply.OsVersion}");
             logger.LogInformation($"- CPU Usage: {reply.CpuUsagePercent:F1}%");
-            logger.LogInformation($"- Memory Usage: {reply.MemoryInfo.UsagePercent:F1}%");
+            // logger.LogInformation($"- Memory Usage: {reply.MemoryInfo.UsagePercent:F1}%");
             logger.LogInformation($"- Uptime: {reply.UptimeSeconds} seconds");
             
             // Now make the REST call to compare
@@ -194,7 +194,7 @@ namespace SystemInfoAPI.Client
                 try
                 {
                     stopwatch.Restart();
-                    var response = await httpClient.GetAsync("https://localhost:5001/api/SystemInfo");
+                    var response = await httpClient.GetAsync("http://localhost:5058/api/SystemInfo");
                     response.EnsureSuccessStatusCode();
                     
                     var jsonResponse = await response.Content.ReadAsStringAsync();
